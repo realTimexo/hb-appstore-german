@@ -16,27 +16,27 @@ void Menu::display()
 {
 	if (this->screen == SPLASH)
 	{
-		console->drawString(9, 21, "Homebrew App Store (Recovery Mode)");
-		console->drawColorString(9, 26, "thanks to:", 0xcc, 0xcc, 0xcc);
+		console->drawString(9, 21, "Homebrew App Store (Wiederherstellungsmodus)");
+		console->drawColorString(9, 26, "Danke an:", 0xcc, 0xcc, 0xcc);
 		console->drawColorString(15, 27, "vgmoose, pwsincd, rw-r-r_0644, zarklord", 0xcc, 0xcc, 0xcc);
-		console->drawColorString(9, 32, "Press [A] to manage packages", 0xff, 0xff, 0x00);
-    console->drawColorString(9, 34, "Press [Y] to reset config data", 0xff, 0xff, 0x00);
+		console->drawColorString(9, 32, "Drücke [A] um Pakete zu verwalten", 0xff, 0xff, 0x00);
+    console->drawColorString(9, 34, "Drücke [Y] um Konfiguration zurückzusetzen", 0xff, 0xff, 0x00);
 	}
 
   if (this->screen == RECOVERY_OPTIONS)
   {
 		console->fillRect(0, 0, 80, 1, 0, 0, 255);
-		console->drawColorString(80 / 2 - 12, 0, "Reset Configuration Data", 0xff, 0xff, 0xff);
+		console->drawColorString(80 / 2 - 12, 0, "Konfiguration zurücksetzen", 0xff, 0xff, 0xff);
 
-		console->drawString(9, 16, "If every FRENCH FRY were perfect");
-		console->drawString(9, 18, "we wouldn't have POTATO CHIPS!");
+		console->drawString(9, 16, "Wenn jede POMMES perfekt wäre,");
+		console->drawString(9, 18, "bräuchten wir keine CHIPS!");
 
-		console->drawColorString(9, 23, "Hold [L]+[R]+[A] to reset configuration data", 0xff, 0xff, 0x00);
+		console->drawColorString(9, 23, "Halte [L]+[R]+[A] um Konfiguration zurückzusetzen", 0xff, 0xff, 0x00);
 
-		console->drawString(9, 28, "Report an issue at: github.com/fortheusers/hb-appstore");
+		console->drawString(9, 28, "Problem melden unter: github.com/fortheusers/hb-appstore");
 
 		console->fillRect(0, 44, 80, 1, 0, 0, 255);
-		console->drawColorString(0, 44, "[B] Back", 0xff, 0xff, 0xff);
+		console->drawColorString(0, 44, "[B] Zurück", 0xff, 0xff, 0xff);
   }
 
 	if (this->get == NULL && this->screen != SPLASH && this->screen != RECOVERY_OPTIONS
@@ -44,8 +44,8 @@ void Menu::display()
 	{
 		// if libget isn't initialized, and we're trying to load a get-related screen, init it!
 		console->update();
-		console->drawString(3, 11, "Syncing package metadata...");
-		console->drawColorString(3, 13, "Just a moment!", 0, 0xcc, 0xcc);
+		console->drawString(3, 11, "Synchronisiere Paketinformationen...");
+		console->drawColorString(3, 13, "Einen Moment Geduld!", 0, 0xcc, 0xcc);
 		console->update();
 		initGet();
 		return;
@@ -55,11 +55,11 @@ void Menu::display()
 	{
 		// draw the top bar
 		console->fillRect(0, 0, 80, 1, 255, 255, 0);
-		console->drawColorString(80 / 2 - 15, 0, "Homebrew App Store Recovery", 0, 0, 0);
+		console->drawColorString(80 / 2 - 15, 0, "Homebrew App Store Wiederherstellung", 0, 0, 0);
 
 		// draw bottom bar
 		console->fillRect(0, 44, 80, 1, 255, 255, 0);
-		console->drawColorString(0, 44, "[A] Install   [B] Back", 0, 0, 0);
+		console->drawColorString(0, 44, "[A] Installieren   [B] Zurück", 0, 0, 0);
 		console->drawColorString(80 - (strlen(this->repoUrl) + 2), 44, this->repoUrl, 0, 0, 0);
 	}
 
@@ -91,9 +91,9 @@ void Menu::display()
 		}
 
 		std::stringstream footer;
-		footer << "Page " << this->position / PAGE_SIZE + 1 << " of " << (get->getPackages().size()-1) / PAGE_SIZE + 1;
+		footer << "Seite " << this->position / PAGE_SIZE + 1 << " von " << (get->getPackages().size()-1) / PAGE_SIZE + 1;
 		console->drawString(34, 40, footer.str().c_str());
-		console->drawColorString(15, 42, "Use left/right and up/down to switch pages and apps", 0xcc, 0xcc, 0xcc);
+		console->drawColorString(15, 42, "Benutze links/rechts und oben/unten zum Navigieren", 0xcc, 0xcc, 0xcc);
 
 		console->drawString(1, (this->position % PAGE_SIZE) * 3 + 2, "-->");
 	}
@@ -121,12 +121,12 @@ void Menu::display()
 		int b = (status == INSTALLED || status == LOCAL) ? 0xFF : 0x00;
 		console->drawColorString(5, 8, cur.statusString(), r, g, b);
 
-		console->drawColorString(5, 12, "Press [A] to install this package", 0xff, 0xff, 0x00);
+		console->drawColorString(5, 12, "Drücke [A] um dieses Paket zu installieren", 0xff, 0xff, 0x00);
 
 		if (status != GET && status != LOCAL)
-			console->drawColorString(5, 14, "Press [X] to remove this package", 0xff, 0xff, 0x00);
+			console->drawColorString(5, 14, "Drücke [X] um dieses Paket zu entfernen", 0xff, 0xff, 0x00);
 
-		console->drawString(5, 16, "Press [B] to go back");
+		console->drawString(5, 16, "Drücke [B] um zurückzugehen");
 	}
 
 	if (this->screen == INSTALLING || this->screen == REMOVING)
@@ -137,28 +137,28 @@ void Menu::display()
 		console->drawString(5, 4, cur.getTitle().c_str());
 
 		if (this->screen == INSTALLING)
-			console->drawColorString(5, 5, "Downloading package...", 0xff, 0xff, 0x00);
+			console->drawColorString(5, 5, "Lade Paket herunter...", 0xff, 0xff, 0x00);
 		else
-			console->drawColorString(5, 5, "Removing package...", 0xff, 0xff, 0x00);
+			console->drawColorString(5, 5, "Entferne Paket...", 0xff, 0xff, 0x00);
 
-    console->drawString(5, 9, "No progress bar available in this mode");
-		console->drawColorString(5, 11, "Please wait!", 0, 0xcc, 0xcc);
+    console->drawString(5, 9, "Kein Fortschrittsbalken in diesem Modus verfügbar");
+		console->drawColorString(5, 11, "Bitte warten!", 0, 0xcc, 0xcc);
 
-		console->drawString(5, 15, "Report an issue at: github.com/fortheusers/hb-appstore");
+		console->drawString(5, 15, "Problem melden unter: github.com/fortheusers/hb-appstore");
 
 	}
 
 	if (this->screen == INSTALL_SUCCESS || this->screen == INSTALL_FAILED)
 	{
 		if (this->screen == INSTALL_SUCCESS)
-			console->drawColorString(3, 12, "Operation successful!", 0, 0xff, 0);
+			console->drawColorString(3, 12, "Erfolgreich ausgeführt!", 0, 0xff, 0);
 		else
 		{
-			console->drawColorString(3, 10, "Operation failed", 0xff, 0, 0);
-			console->drawString(3, 12, "You can file an issue at github.com/fortheusers/hb-appstore");
+			console->drawColorString(3, 10, "Fehlgeschlagen", 0xff, 0, 0);
+			console->drawString(3, 12, "Du kannst ein Problem melden unter github.com/fortheusers/hb-appstore");
 		}
 
-		console->drawColorString(3, 14, "Press [A] to continue", 0xff, 0xff, 0x00);
+		console->drawColorString(3, 14, "Drücke [A] um fortzufahren", 0xff, 0xff, 0x00);
 	}
 
 	console->update();
@@ -179,7 +179,7 @@ void Menu::initGet()
 	if (get->getRepos().size() > 0)
 		this->repoUrl = get->getRepos()[0]->getUrl().c_str();
 	else
-		this->repoUrl = "No packages found on any repos!";
+		this->repoUrl = "Keine Pakete in den Repositories gefunden!";
 }
 
 void Menu::moveCursor(int diff)
